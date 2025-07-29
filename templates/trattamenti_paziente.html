@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Trattamenti di {{ paziente.nome }} {{ paziente.cognome }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+            pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+            background-color: #f0f8ff;
+            padding: 20px;
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            color: #003366;
+            max-width: 800px;
+            max-height: 400px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            line-height: 1.5em;
+            overflow-y: auto;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4em; /* più compatto */
+            padding: 12px;
+            font-size: 15px;
+            line-height: 1.3em;
+            padding: 12px;
+            }
+
+        .chiave {
+            font-weight: bold;
+            color: #0056b3;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #222;
+            text-align: center;
+        }
+        h1 {
+            color: #007BFF;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+        .pulsante-azione {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+            line-height: 1.3em;
+            padding: 12px;
+            
+        }
+        .pulsante-azione:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: left; margin: 20px;">
+        <a href="{{ url_for('visualizzatrattamenti') }}" class="pulsante-azione" style="position: fixed; top: 20px; left: 20px;">
+            ← Indietro
+        </a>
+    </div>
+
+    <h1>Trattamenti di {{ paziente.nome }} {{ paziente.cognome }}</h1>
+
+    <div class="contenitore-trattamenti">
+        {% for riga in contenuto.split('\n') %}
+            {% set riga_pulita = riga.strip() %}
+            {% if riga_pulita %}
+                {% if '---' in riga_pulita %}
+                    <p class="separatore">{{ riga_pulita }}</p>
+                {% elif '|' in riga_pulita %}
+                    <p class="intestazione">{{ riga_pulita }}</p>
+                {% elif 'Trattamento Dente' in riga_pulita %}
+                    <p class="dente">{{ riga_pulita }}</p>
+                {% else %}
+                    <p class="descrizione">{{ riga_pulita }}</p>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <form action="{{ url_for('home') }}" method="get">
+        <button type="submit" class="submit-btn" id="torna-home">Torna alla Home</button>
+    </form>
+</body>
+
+</html>
+

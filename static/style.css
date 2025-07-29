@@ -1,0 +1,891 @@
+/* Impostazioni generali per index.html */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(180deg, #a8c7e1, #f0f8ff); /* Gradiente come sfondo */
+    background-size: 100% 100%;
+    animation: gradientBackground 15s ease infinite;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    min-height: 100vh; /* Guarantees HTML is at least viewport height, even with short content */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Important for consistent sizing */
+
+    /* Your animated gradient background goes here */
+    background: linear-gradient(180deg, #8ec1eb, #f0f8ff);
+    background-size: 100% 100%;
+    animation: gradientBackground 15s ease infinite;
+    background-attachment: fixed; /* Keeps the background in place while content scrolls */
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/* Animazione del gradiente */
+@keyframes gradientBackground {
+    0% {
+        background: linear-gradient(180deg, #a8c7e1, #f0f8ff);
+    }
+    50% {
+        background: linear-gradient(180deg, #f0f8ff, #a8c7e1);
+    }
+    100% {
+        background: linear-gradient(180deg, #a8c7e1, #f0f8ff);
+    }
+}
+
+/* Titolo principale */
+h1 {
+    color: #003366;
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Logo */
+#logo {
+    max-width: 150px;
+    margin-bottom: 30px;
+    border-radius: 50%;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#logo:hover {
+    transform: scale(1.2);
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+  /* Aggiungi questo per lo spazio sopra il contenitore dei pulsanti */
+  margin-top: 40px; /* Puoi regolare questo valore (es. 20px, 30px, 50px) */
+}
+
+/* ... il resto del tuo CSS per i button ... */
+
+/* Stile per i singoli pulsanti (il tuo codice esistente, leggermente modificato) */
+button {
+  background-color: #3399ff;
+  color: white;
+  /* Rimuovi 'margin: 20px;' da qui, lo gestisce il 'gap' del contenitore */
+  padding: 15px 30px;
+  font-size: 22px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  /* Puoi aggiungere una larghezza minima se vuoi che i pulsanti abbiano una dimensione più uniforme */
+  min-width: 200px; /* Esempio: assicurati che ogni pulsante sia almeno 200px di larghezza */
+  text-align: center; /* Centra il testo all'interno del pulsante */
+}
+
+/* Effetto hover per i pulsanti (il tuo codice esistente) */
+button:hover {
+  background-color: #0066cc;
+  transform: translateY(-7px);
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.2);
+}
+/* Animazione generale */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body {
+    animation: fadeIn 1s ease-out;
+}
+
+/* Sezione principale (solo in aggiungi_paziente.html) */
+.main-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    animation: slideIn 1s ease-out;
+    min-height: 450px;
+}
+
+/* Stile per i campi di input */
+input[type="text"],
+input[type="date"] {
+    background-color: #fff;
+    border: 2px solid #3399ff;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 18px;
+    width: 250px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus {
+    border-color: #0066cc;
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.7);
+    outline: none;
+}
+
+/* Etichette dei campi */
+/* Centratura delle etichette dei campi */
+label {
+    font-size: 18px;
+    color: #003366;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    text-align: center; /* Centratura del testo */
+    width: 100%; /* Assicurati che l'etichetta occupi tutta la larghezza del contenitore */
+}
+
+/* Centratura dei campi di input */
+input[type="text"], input[type="date"] {
+    background-color: #fff;
+    border: 2px solid #3399ff;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 18px;
+    width: 250px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+    display: block; /* Assicura che l'input si comporti come blocco */
+    margin-left: auto; /* Centratura orizzontale */
+    margin-right: auto; /* Centratura orizzontale */
+}
+
+/* Centratura del testo all'interno dei campi */
+input[type="text"],
+input[type="date"] {
+    background-color: #fff;
+    border: 2px solid #3399ff;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 18px;
+    width: 250px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+    text-align: center; /* Centra il testo all'interno dell'input */
+}
+
+
+
+/* Aggiungi uno spazio tra il titolo e il form */
+h1 {
+    margin-bottom: 30px;
+}
+
+/* Centratura del testo nel campo "Data di nascita" */
+input[type="date"] {
+    text-align: center;
+    width: 250px;
+    padding: 10px 15px;
+    font-size: 18px;
+    background-color: #fff;
+    border: 2px solid #3399ff;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="date"]:focus {
+    border-color: #0066cc;
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.7);
+    outline: none;
+}
+/* Aggiungi margine al campo sesso per separarlo dal codice fiscale */
+.form-group input[type="text"], .form-group input[type="date"], .form-group select {
+    margin-bottom: 15px; /* Distanza tra gli input */
+}
+
+/* Specifica margine per il campo sesso */
+.form-group .sesso-group {
+    margin-top: 15px; /* Distanza tra codice fiscale e sesso */
+}
+
+form input[type="text"],
+form input[type="date"],
+form input[list],
+/* Rimuovi tutti i bordi e le frecce predefinite */
+/* Selezione con rimozione della freccia di default */
+form select {
+    background-color: white !important;
+    border: 1px solid #00aaff !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+    font-size: 16px !important;
+    color: black !important;
+    outline: none !important;
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    -moz-appearance: auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Aggiungi una freccia personalizzata */
+form select::after {
+    content: '\25BE'; /* Triangolo giù */
+    font-size: 16px;
+    color: #00aaff;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* La freccia non blocca l'interazione */
+}
+
+/* Rimuovi la freccia in Internet Explorer ed Edge */
+form select::-ms-expand {
+    display: none;
+}
+
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #f3f3f3;
+    transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+input[readonly], select[readonly] {
+    background-color: #e9ecef;
+}
+
+button.submit-btn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    width: 200px;
+    text-align: center;
+}
+
+
+
+button.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Personalizzazione del menù a tendina (select) */
+/* Centratura del testo all'interno del campo Sesso */
+select#sesso {
+    text-align: center; /* Centra il testo dentro il select */
+}
+
+/* Centratura delle opzioni nel select */
+select#sesso option {
+    text-align: center; /* Centra il testo anche nelle opzioni */
+}
+
+/* Stesso comportamento per il campo Luogo di nascita */
+select#luogo_nascita {
+    text-align: center; /* Centra il testo dentro il select */
+}
+
+select#luogo_nascita option {
+    text-align: center; /* Centra il testo anche nelle opzioni */
+}
+
+/* Opzioni disabilitate (placeholder) con grigio chiaro */
+select#sesso option:disabled,
+select#luogo_nascita option:disabled {
+    color: rgba(169, 169, 169, 0.7); /* Grigio chiaro per il testo disabilitato */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: #0077cc;
+    text-align: center;
+}
+
+table {
+    width: 80%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #e6f2ff;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+a {
+    display: inline-block;
+    color: #0077cc;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.delete-icon {
+    color: black;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: red;
+    padding: 8px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px; /* Larghezza dell'icona ridotta */
+    height: 24px; /* Altezza dell'icona ridotta */
+    border-radius: 5px;
+}
+
+.delete-icon:hover {
+    background-color: darkred;
+}
+
+td {
+    text-align: center;
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+th:nth-child(5), td:nth-child(5) {
+    width: 50px; /* Rimpiccioliamo la colonna "Elimina" */
+}
+
+
+/*per poter modificare il pulsante torna alla home in visualizza_pazienti
+/* Stile per la tabella */
+/* Stile per la tabella */
+/* Stile per la tabella */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Elimina gli spazi tra le celle */
+    border: 2px solid #007BFF; /* Bordo esterno blu */
+    border-radius: 10px; /* Bordi arrotondati per la tabella */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ombra leggera per la tabella */
+    overflow: hidden; /* Nasconde eventuali bordi sporgenti */
+  }
+  
+  /* Stile per le celle (th e td) */
+  th, td {
+    padding: 12px 20px;
+    text-align: center;
+    background-color: white;
+    border: 1px solid #f0f0f0; /* Linee di divisione interne grigie chiare */
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Colore di sfondo per le intestazioni */
+  th {
+    background-color: #f7f7f7; /* Colore di sfondo leggero */
+    font-weight: bold;
+    color: #333; /* Colore testo scuro per le intestazioni */
+    border-bottom: 2px solid #007BFF; /* Linea blu sotto le intestazioni */
+  }
+  
+  /* Stile al passaggio del mouse per le celle */
+  th:hover, td:hover {
+    background-color: #f1f1f1; /* Sfondo più scuro al passaggio del mouse */
+  }
+  
+  /* Rende la tabella più interattiva */
+  tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alterna il colore di sfondo per righe pari */
+  }
+  
+  tr:hover {
+    background-color: #eaeaea; /* Cambia colore quando si passa il mouse sopra una riga */
+  }
+  
+  /* Opzionale: aggiunge un bordo arrotondato alle celle */
+  td, th {
+    border-radius: 5px;
+  }
+  
+  
+  /* Stile per il pulsante "torna alla home" */
+  #torna-home {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    width: 200px;
+    text-align: center;
+}
+  
+  #torna-home:hover {
+    background-color: darkblue;
+  }
+  
+  /* per aggiungi_trattamento.html */
+/* --- STILI SPECIFICI PER aggiungi_trattamento.html --- */
+/* --- STILI SPECIFICI PER aggiungi_trattamento.html --- */
+
+/* Contenitore della sezione trattamenti */
+.trattamento-section {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    max-width: 700px;
+    margin: 0 auto;
+    margin-top: 40px;
+    text-align: center;
+}
+
+/* Etichette dei trattamenti */
+.trattamento-section label {
+    font-weight: bold;
+    color: #003366;
+    display: block;
+    margin: 15px 0 5px;
+}
+
+/* Input e textarea per trattamenti */
+.trattamento-section input[type="text"],
+.trattamento-section input[type="number"],
+.trattamento-section textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #3399ff;
+    border-radius: 8px;
+    background-color: white;
+    text-align: center;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+/* Selezione multipla per denti */
+.trattamento-section select[multiple] {
+    height: 120px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #3399ff;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+/* Pulsante verde per aggiungere trattamento */
+button.aggiungi-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+button.aggiungi-btn:hover {
+    background-color: #218838;
+}
+
+
+/*per lo style dei denti selezionati in aggiungi trattamenti*/
+.griglia-denti-totale {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.riga-denti {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.dente-box {
+    background-color: #f0f8ff;
+    border: 1px solid #007bff;
+    border-radius: 6px;
+    padding: 6px 8px;
+    text-align: center;
+    font-size: 13px;
+    transition: background-color 0.2s;
+}
+
+.dente-box:hover {
+    background-color: #dceeff;
+}
+
+.dente-box input {
+    margin-bottom: 4px;
+}
+
+.separatore-verticale {
+    width: 2px;
+    height: 40px;
+    background-color: #007bff;
+    margin: 0 8px;
+    border-radius: 2px;
+}
+
+.linea-orizzontale {
+    width: 100%;
+    max-width: 600px;
+    border: none;
+    border-top: 2px solid #007bff;
+    margin: 10px 0;
+}
+
+/* Stile campo Importo */
+input[type="number"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 12px;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,123,255,0.15);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+input[type="number"]::placeholder {
+    color: #a9a9a9;
+    font-style: italic;
+}
+
+input[type="number"]:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0,86,179,0.6);
+}
+
+.dente-dettagli-box {
+  border: 1px solid #3399ff;
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 500px;
+  background-color: #f0f8ff;
+  margin: 10px auto;
+}
+
+
+/* Stile campo Descrizione */
+textarea {
+    width: 100%;
+    max-width: 600px;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,123,255,0.15);
+    resize: vertical;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+textarea::placeholder {
+    color: #a9a9a9;
+    font-style: italic;
+}
+
+textarea:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 10px rgba(0,86,179,0.6);
+}
+
+
+.pulsante-azione {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    min-width: 140px;  /* larghezza minima per uniformare */
+    text-align: center;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+}
+
+.pulsante-azione:hover {
+    background-color: #0056b3;
+}
+
+
+.trattamento-linea {
+    color: green;
+    font-weight: bold;
+}
+.trattamento-info {
+    color: #007BFF;
+    font-weight: bold;
+}
+.trattamento-testo {
+    color: #333;
+}
+
+.contenitore-trattamenti {
+    background-color: #f0f8ff;
+    padding: 20px;
+    border: 2px solid #007BFF;
+    border-radius: 10px;
+    max-width: 800px;
+    max-height: 400px;    /* altezza massima fissa */
+    margin: 20px auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    color: #003366;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: left;
+    word-break: break-word; /* meglio break-word per non spezzare troppo */
+    overflow-y: auto;      /* scroll verticale se troppo alto */
+}
+
+
+
+.contenitore-trattamenti p {
+    margin: 4px 0;
+    line-height: 1.3em;
+}
+
+
+.separatore {
+    background-color: #24ff0237; /* verde evidenziatore */
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin: 8px 0;
+}
+
+
+.intestazione {
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.dente {
+    color: #0056b3;
+    font-weight: bold;
+}
+
+.descrizione {
+    color: #222;
+}
+
+.pulsante-modifica {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #ffc107; /* giallo per differenziarlo */
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1000;
+}
+.pulsante-modifica:hover {
+    background-color: #e0a800;
+}
+
+/* Stile per il contenitore del form di ricerca */
+.search-container input[type="text"] {
+    display: inline-block !important; /* Forza la visualizzazione */
+    visibility: visible !important;   /* Forza la visibilità */
+    width: 250px !important;          /* Forza la larghezza */
+    height: 40px !important;          /* Forza un'altezza minima */
+    padding: 10px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 5px !important;
+    font-size: 16px !important;
+    box-sizing: border-box !important;
+    color: #333 !important;
+    background-color: #fff !important;
+    opacity: 1 !important; /* Assicurati che non sia trasparente */
+}
+
+/* Aggiungi questa regola (o modificala se esiste già) in static/style.css */
+.search-container {
+    margin-top: 15px; /* Prova con 15px, puoi cambiarlo a 10px, 20px, ecc. */
+}
+
+/* Stile per i campi di input nel form di ricerca */
+.search-container input[type="text"] {
+    width: 250px; /* Dai una larghezza sufficiente */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Include padding e border nella larghezza */
+    display: block; /* Assicurati che non sia display: none; da qualche altra parte */
+    visibility: visible; /* Assicurati che non sia hidden */
+    color: #333; /* Colore del testo */
+    background-color: #fff; /* Colore di sfondo */
+}
+
+/* Stile per il bottone di filtro */
+.search-btn {
+    padding: 10px 15px;
+    background-color: #28a745; /* Verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+    background-color: #218838;
+}
+
+/* Stile per il bottone di reset */
+.reset-btn {
+    display: inline-block; /* Per comportarsi come un blocco con padding */
+    padding: 10px 15px;
+    background-color: #6c757d; /* Grigio */
+    color: white;
+    text-decoration: none; /* Rimuove sottolineatura */
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.reset-btn:hover {
+    background-color: #5a6268;
+}
+
+/* Stile per il bottone "Torna alla Home" (già definito, ma lo includo per completezza) */
+.submit-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Spazio dal contenuto sopra */
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* --- STILI DELLA TABELLA: il giusto equilibrio --- */
+table {
+    width: 100%; /* La tabella occuperà il 100% dello spazio disponibile nel suo contenitore */
+    max-width: 900px; /* Larghezza massima per evitare che si espanda troppo su schermi grandi */
+    min-width: 600px; /* Larghezza minima per garantire leggibilità su schermi più piccoli */
+    margin-left: auto; /* Centra la tabella orizzontalmente se non occupa il 100% della larghezza del contenitore */
+    margin-right: auto;
+
+    border-collapse: collapse; /* Rimuove lo spazio tra i bordi delle celle */
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px 12px; /* Aumentiamo il padding per dare più aria alle celle */
+    text-align: left;
+    font-size: 1em; /* Torna alla dimensione del font standard */
+
+    /* Gestione del testo lungo: */
+    white-space: nowrap; /* Mantiene il testo su una singola riga */
+    overflow: hidden; /* Nasconde il testo che sfora */
+    text-overflow: ellipsis; /* Aggiunge "..." se il testo è troppo lungo */
+    max-width: 180px; /* Aumentiamo la larghezza massima per ogni colonna */
+    /* Potresti voler impostare max-width specifiche per ogni colonna se necessario (es. Codice Fiscale) */
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+

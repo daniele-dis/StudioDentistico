@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Aggiungi Trattamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Cerca Paziente</h1>
+
+    {% if not ricerca_effettuata %}
+        <form method="POST" action="{{ url_for('aggiungi_trattamento') }}">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required autocomplete="off">
+            <!--required autocomplete="off" se voglio che non mi dia suggerimenti, vicino nome e cognome-->
+            <label for="cognome">Cognome:</label>
+            <input type="text" id="cognome" name="cognome" required autocomplete="off">
+            <button type="submit" class="pulsante-azione" style="width: 200px;">
+                Cerca
+            </button>
+            
+             
+        </form>
+    {% endif %}
+
+    {% if errore %}
+        <p style="color: red;">{{ errore }}</p>
+    {% endif %}
+
+    {% if ricerca_effettuata %}
+        <p>Hai cercato il paziente: {{ nome }} {{ cognome }}</strong></p>
+        
+        {% if pazienti %}
+            <h2>Risultati:</h2>
+        <table border="1" cellpadding="5" cellspacing="0" style="margin: 0 auto; width: 90%; border-collapse: collapse;">
+            <tr>
+                <th style="text-align: center;">Nome</th>
+                <th style="text-align: center;">Cognome</th>
+                <th style="text-align: center;">Codice Fiscale</th>
+                <th style="text-align: center;">Azioni</th>
+            </tr>
+            {% for p in pazienti %}
+                <tr>
+                    <td style="text-align: center;">{{ p.nome }}</td>
+                    <td style="text-align: center;">{{ p.cognome }}</td>
+                    <td style="text-align: center;">{{ p.codice_fiscale }}</td>
+                    <td style="text-align: center;">
+                        <a href="{{ url_for('dettagli_trattamento_paziente', paziente_id=p.id) }}">
+                            <button style="background-color: #28a745; color: white; padding: 7px 14px; font-size: 14px; border: none; border-radius: 5px;">
+                                Aggiungi Trattamento
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        {% else %}
+            <p>Nessun paziente trovato con quel Nome e Cognome.</p>
+        {% endif %}
+    {% endif %}
+
+
+<!--   <a href="{{ url_for('home') }}" style="background-color: #007BFF; color: white; padding: 6px 10px; border-radius: 5px; text-decoration: none;">
+            Torna alla Home
+        </a> -->
+
+    <form action="{{ url_for('home') }}" method="get">
+    <button type="submit" class="submit-btn" id="torna-home" style="width: 100px;">
+        Torna alla Home
+    </button>
+    </form>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Trattamenti - {{ paziente.nome }} {{ paziente.cognome }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div style="margin-top: 30px;">
+        
+    </div>
+
+    <h1>Trattamenti per {{ paziente.nome }} {{ paziente.cognome }}</h1>
+    <p><strong>Codice Fiscale:</strong> {{ paziente.codice_fiscale }}</p> 
+
+    <form method="POST">
+    <label><strong>Seleziona i denti interessati:</strong></label><br>
+    <div class="griglia-denti-totale">
+
+        <div class="riga-denti">
+            {% for dente in [18,17,16,15,14,13,12,11] %}
+                <div class="dente-box">
+                    <input type="checkbox" id="dente_{{ dente }}" name="denti_interessati" value="{{ dente }}">
+                    <label for="dente_{{ dente }}">{{ dente }}</label>
+                </div>
+            {% endfor %}
+            <div class="separatore-verticale"></div>
+            {% for dente in [21,22,23,24,25,26,27,28] %}
+                <div class="dente-box">
+                    <input type="checkbox" id="dente_{{ dente }}" name="denti_interessati" value="{{ dente }}">
+                    <label for="dente_{{ dente }}">{{ dente }}</label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <hr class="linea-orizzontale">
+
+        <div class="riga-denti">
+            {% for dente in [38,37,36,35,34,33,32,31] %}
+                <div class="dente-box">
+                    <input type="checkbox" id="dente_{{ dente }}" name="denti_interessati" value="{{ dente }}">
+                    <label for="dente_{{ dente }}">{{ dente }}</label>
+                </div>
+            {% endfor %}
+            <div class="separatore-verticale"></div>
+            {% for dente in [41,42,43,44,45,46,47,48] %}
+                <div class="dente-box">
+                    <input type="checkbox" id="dente_{{ dente }}" name="denti_interessati" value="{{ dente }}">
+                    <label for="dente_{{ dente }}">{{ dente }}</label>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div><br>
+
+
+
+
+    <label for="importo">Importo (€):</label><br>
+    <input type="number" step="0.01" id="importo" name="importo" required><br><br>
+
+    <label for="descrizione">Descrizione trattamento:</label><br>
+    <textarea id="descrizione" name="descrizione" rows="8" cols="60" placeholder="Dettagli trattamento..."></textarea>
+
+    <script>
+    const dentiCheckboxes = document.querySelectorAll('input[name="denti_interessati"]');
+    const descrizione = document.getElementById('descrizione');
+
+    function aggiornaDescrizione() {
+        const dentiSelezionati = Array.from(dentiCheckboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+
+        const blocchiEsistenti = descrizione.value.split("\n\n").filter(b => b.trim() !== "");
+        const mappaBlocchi = {};
+
+        blocchiEsistenti.forEach(blocco => {
+            const match = blocco.match(/Trattamento Dente (\d+):/);
+            if (match) {
+                const dente = match[1];
+                // Recupera solo il contenuto scritto dopo i due punti
+                const contenuto = blocco.split(':')[1]?.trim() || "";
+                mappaBlocchi[dente] = contenuto;
+            }
+        });
+
+        const nuoviBlocchi = dentiSelezionati.map(dente => {
+            const contenuto = mappaBlocchi[dente] || "";
+            return `Trattamento Dente ${dente}:\n${contenuto}`;
+        });
+
+        descrizione.value = nuoviBlocchi.join("\n\n");
+    }
+
+    // Event listener
+    dentiCheckboxes.forEach(cb => cb.addEventListener('change', aggiornaDescrizione));
+    </script>
+
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+    <button type="submit" style="background-color: #28a745; color: white; padding: 8px 16px; font-size: 14px; border: none; border-radius: 5px; margin-top: 20px;">
+        Salva trattamento
+    </button>
+    </form>
+
+    <form action="{{ url_for('home') }}" method="get">
+        <button type="submit" class="submit-btn" id="torna-home" style="padding: 8px 16px; font-size: 14px;">
+            Torna alla Home
+        </button>
+    </form>
+    </div>
+
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div id="flash-messages" style="display:none;">
+      {% for category, message in messages %}
+        <span data-category="{{ category }}">{{ message }}</span>
+      {% endfor %}
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const container = document.getElementById('flash-messages');
+        const spans = container.querySelectorAll('span');
+        
+        // Loop through each flashed message
+        spans.forEach(function(span) {
+          const category = span.getAttribute('data-category');
+          const message = span.textContent;
+
+          // Only show alert for 'success' messages
+          if (category === 'success') {
+            alert(message); // This is your desired pop-up!
+            
+            // Clear form fields after successful save
+            document.querySelectorAll('input[name="denti_interessati"]').forEach(cb => cb.checked = false);
+            let descrizione = document.getElementById('descrizione');
+            let importo = document.getElementById('importo');
+            if (descrizione) descrizione.value = '';
+            if (importo) importo.value = '';
+          } else if (category === 'error') {
+            // If you have other types of flash messages (e.g., error), you can display them differently
+            // For example, you could append them to a specific div on the page.
+            // For now, we'll just alert them too for simplicity, or do nothing.
+            // alert("Errore: " + message); 
+          }
+        });
+        
+        // Remove the hidden div after processing messages
+        container.remove();
+      });
+    </script>
+  {% endif %}
+{% endwith %}
+
+
+</body>
+
+</html>

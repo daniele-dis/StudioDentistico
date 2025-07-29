@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggiungi Paziente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="main-section">
+        <h1>Aggiungi Paziente</h1>
+
+        {% if errore %}
+        <div class="alert alert-danger">
+            {{ errore }}
+        </div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('aggiungi_paziente') }}" autocomplete="off">
+
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Inserisci nome" required oninput="generaCodiceFiscale()">
+            </div>
+
+            <div class="form-group">
+                <label for="cognome">Cognome:</label>
+                <input type="text" id="cognome" name="cognome" placeholder="Inserisci cognome" required oninput="generaCodiceFiscale()">
+            </div>
+
+            <div class="form-group">
+                <label for="sesso">Sesso:</label>
+                <select id="sesso" name="sesso" required onchange="generaCodiceFiscale()">
+                    <option value="" disabled selected>Seleziona Sesso</option>
+                    <option value="Maschio">Maschio</option>
+                    <option value="Femmina">Femmina</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="data_nascita">Data di Nascita:</label>
+                <input type="date" id="data_nascita" name="data_nascita" required oninput="generaCodiceFiscale(); validateYear()">
+                <div id="error-message" style="color: red; display: none;">L'anno deve avere esattamente 4 cifre.</div>
+            </div>
+
+            <div class="form-group checkbox-group">
+                <label for="nato_estero_checkbox" class="inline-label">Nato all'Estero:</label>
+                <input type="checkbox" id="nato_estero_checkbox" name="nato_estero" onchange="toggleCodiceFiscaleMode()">
+            </div>
+
+            <div class="form-group">
+                <label for="luogo_nascita">Luogo di Nascita:</label>
+                <input list="comuni" id="luogo_nascita" name="luogo_nascita" required oninput="generaCodiceFiscale()">
+                <datalist id="comuni"></datalist>
+            </div>
+            
+            <div class="form-group">
+                <label for="codice_fiscale">Codice Fiscale:</label>
+                <input type="text" id="codice_fiscale" name="codice_fiscale" readonly required placeholder="Codice Fiscale">
+            </div>
+
+            <button type="submit" class="submit-btn">Salva Paziente</button>
+            <button type="button" class="submit-btn" id="homeButton">Torna alla Home</button>
+
+            <script>
+                document.getElementById("homeButton").addEventListener("click", function() {
+                    window.location.href = "/"; // Modifica con il percorso della tua home page
+                });
+
+                let comuniData = [];
+
+                // Carica i comuni dal file JSON
+                fetch('/static/comuni.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        comuniData = data;
+                        const datalist = document.getElementById('comuni');
+                        data.forEach(comune => {
+                            const option = document.createElement('option');
+                            option.value = comune.denominazione_ita;
+                            datalist.appendChild(option);
+                        });
+                        // Chiama le funzioni iniziali una volta caricati i comuni
+                        toggleCodiceFiscaleMode(); // Per impostare lo stato iniziale del campo CF e Luogo di Nascita
+                        generaCodiceFiscale(); // Per generare il CF se i campi sono già compilati
+                    })
+                    .catch(error => {
+                        console.error('Errore nel caricamento dei comuni:', error);
+                    });
+                
+                // Funzione per abilitare/disabilitare il campo CF e Luogo di Nascita in base al checkbox
+                function toggleCodiceFiscaleMode() {
+                    const natoEsteroCheckbox = document.getElementById("nato_estero_checkbox");
+                    const codiceFiscaleInput = document.getElementById("codice_fiscale");
+                    const luogoNascitaInput = document.getElementById("luogo_nascita");
+
+                    if (natoEsteroCheckbox.checked) {
+                        codiceFiscaleInput.readOnly = false;
+                        codiceFiscaleInput.value = ""; // Pulisce il campo quando si seleziona "Nato all'Estero"
+                        codiceFiscaleInput.placeholder = "Inserisci Codice Fiscale Estero";
+                        
+                        luogoNascitaInput.value = ""; // Pulisce il luogo di nascita se era già impostato
+                        luogoNascitaInput.disabled = true; // Disabilita il campo luogo di nascita
+                        luogoNascitaInput.removeAttribute('required'); // Rimuove il required
+                    } else {
+                        codiceFiscaleInput.readOnly = true;
+                        codiceFiscaleInput.placeholder = "Codice Fiscale";
+                        
+                        luogoNascitaInput.disabled = false; // Abilita il campo luogo di nascita
+                        luogoNascitaInput.setAttribute('required', 'required'); // Reimposta il required
+                        generaCodiceFiscale(); // Tenta di generare il CF se il checkbox è deselezionato
+                    }
+                }
+
+                // Funzione per generare automaticamente il codice fiscale
+                function generaCodiceFiscale() {
+                    const natoEsteroCheckbox = document.getElementById("nato_estero_checkbox");
+                    const codiceFiscaleInput = document.getElementById("codice_fiscale");
+
+                    // Se il checkbox "Nato all'Estero" è spuntato, non generiamo il CF
+                    if (natoEsteroCheckbox.checked) {
+                        return;
+                    }
+
+                    const nome = document.getElementById("nome").value.trim().toUpperCase();
+                    const cognome = document.getElementById("cognome").value.trim().toUpperCase();
+                    const dataNascita = document.getElementById("data_nascita").value;
+                    const sesso = document.getElementById("sesso").value;
+                    const luogo = document.getElementById("luogo_nascita").value.trim().toUpperCase();
+                    
+                    if (nome && cognome && dataNascita && sesso && luogo) {
+                        function estraiCFCognome(str) {
+                            const consonanti = str.replace(/[^BCDFGHJKLMNPQRSTVWXYZ]/g, '');
+                            const vocali = str.replace(/[^AEIOU]/g, '');
+                            const codice = (consonanti + vocali + "XXX").slice(0, 3);
+                            return codice;
+                        }
+
+                        function estraiCFNome(str) {
+                            const consonanti = str.replace(/[^BCDFGHJKLMNPQRSTVWXYZ]/g, '');
+                            const vocali = str.replace(/[^AEIOU]/g, '');
+                            if (consonanti.length >= 4) {
+                                return consonanti[0] + consonanti[2] + consonanti[3];
+                            } else {
+                                return (consonanti + vocali + "XXX").slice(0, 3);
+                            }
+                        }
+
+                        const codiceCognome = estraiCFCognome(cognome);
+                        const codiceNome = estraiCFNome(nome);
+
+                        const [anno, mese, giorno] = dataNascita.split('-');
+                        const codiceAnno = anno.slice(-2);
+                        const mesiLettere = "ABCDEHLMPRST";
+                        const codiceMese = mesiLettere[parseInt(mese, 10) - 1];
+                        const giornoNum = parseInt(giorno, 10);
+                        const codiceGiorno = (sesso === "Femmina") ? giornoNum + 40 : giornoNum;
+                        const codiceGiornoStr = codiceGiorno.toString().padStart(2, '0');
+
+                        let codiceComune = "";
+                        const comuneTrovato = comuniData.find(c => c.denominazione_ita.toUpperCase() === luogo);
+                        if (comuneTrovato) {
+                            codiceComune = comuneTrovato.codice_belfiore;
+                        }
+
+                        if (!codiceComune) {
+                            console.warn("Comune non trovato per la generazione del Codice Fiscale.");
+                            codiceFiscaleInput.value = "ERRORE CF"; // Indicazione visiva all'utente
+                            return;
+                        }
+
+                        const parziale = (codiceCognome + codiceNome + codiceAnno + codiceMese + codiceGiornoStr + codiceComune).toUpperCase();
+
+                        const setDisp = {
+                            '0': 1, '1': 0, '2': 5, '3': 7, '4': 9, '5': 13, '6': 15, '7': 17, '8': 19, '9': 21,
+                            'A': 1, 'B': 0, 'C': 5, 'D': 7, 'E': 9, 'F': 13, 'G': 15, 'H': 17, 'I': 19, 'J': 21,
+                            'K': 2, 'L': 4, 'M': 18, 'N': 20, 'O': 11, 'P': 3, 'Q': 6, 'R': 8, 'S': 12, 'T': 14,
+                            'U': 16, 'V': 10, 'W': 22, 'X': 25, 'Y': 24, 'Z': 23
+                        };
+                        const setPari = {
+                            '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
+                            'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7, 'I': 8, 'J': 9,
+                            'K': 10, 'L': 11, 'M': 12, 'N': 13, 'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19,
+                            'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25
+                        };
+
+                        let somma = 0;
+                        for (let i = 0; i < parziale.length; i++) {
+                            const c = parziale.charAt(i);
+                            somma += (i % 2 === 0) ? setDisp[c] : setPari[c];
+                        }
+                        const carattereControllo = String.fromCharCode(65 + (somma % 26));
+                        const codiceFiscale = parziale + carattereControllo;
+
+                        codiceFiscaleInput.value = codiceFiscale;
+                    } else {
+                        codiceFiscaleInput.value = ""; // Pulisce se i campi obbligatori non sono compilati
+                    }
+                }
+
+                // Funzione per validare l'anno di nascita
+                function validateYear() {
+                    const dataInput = document.getElementById("data_nascita");
+                    const data = dataInput.value;
+                    const anno = data.split("-")[0];
+
+                    if (anno && anno.length !== 4) {
+                        document.getElementById("error-message").style.display = "block";
+                    } else {
+                        document.getElementById("error-message").style.display = "none";
+                    }
+                }
+
+                // Aggiungi gli eventi per ogni campo per chiamare la funzione ogni volta che vengono modificati
+                document.getElementById("nome").addEventListener("input", generaCodiceFiscale);
+                document.getElementById("cognome").addEventListener("input", generaCodiceFiscale);
+                document.getElementById("sesso").addEventListener("change", generaCodiceFiscale);
+                document.getElementById("data_nascita").addEventListener("input", generaCodiceFiscale);
+                document.getElementById("luogo_nascita").addEventListener("input", generaCodiceFiscale);
+                document.getElementById("data_nascita").addEventListener("input", validateYear);
+                
+            </script>
+
+        </form>
+    </div>
+</body>
+</html>

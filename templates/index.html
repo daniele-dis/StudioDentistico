@@ -1,0 +1,26 @@
+
+<!--DanyDis-->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Pazienti</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="content">
+    <img id="logo" src="static/logo.png" alt="Logo">
+    <h1>Studio Dentistico </h1>
+    
+    <div class="button-container">
+      <button onclick="location.href='/aggiungi_paziente'">Aggiungi Paziente</button>
+      <button onclick="location.href='/visualizza_pazienti'">Lista Pazienti</button>
+      <button onclick="location.href='/aggiungi_trattamento'">Aggiungi Trattamenti</button>
+      <button onclick="location.href='/visualizzatrattamenti'">Vis/Mod Trattam</button>
+    </div>
+
+</body>
+</html>
+
+
